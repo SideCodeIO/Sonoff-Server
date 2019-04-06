@@ -1,0 +1,37 @@
+{
+  "name": "sonoff-server",
+  "version": "2.0.0",
+  "description": "Sonof Server - A Sonoff Cloud replacement ",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "dotenv": "^7.0.0",
+    "express": "^4.16.2",
+    "fs": "^0.0.1-security",
+    "http": "^0.0.0",
+    "https": "^1.0.0",
+    "nodejs-websocket": "^1.7.1",
+    "request": "^2.83.0",
+    "url": "^0.11.0",
+    "wifi-control": "^2.0.1"
+  },
+  "repository": "github:SideCodeIO/sonoff-server",
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  },
+  "keywords": [
+    "sonoff",
+    "sonoff Dual"
+  ],
+  "author": {
+    "name" : "Jhonny Cohen",
+    "email" : "jhonny@sidecode.io",
+    "url" : "https://sidecode.io"
+  },
+  "license": "ISC"
+}
