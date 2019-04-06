@@ -1,4 +1,6 @@
-# Private SONOFF Server - Sonoff Cloud based on node.js - Supporting Sonoff Duel.
+# Private Sonoff Server - Sonoff Cloud based on node.js
+
+Current State => Tested and Working with Sonoff Duel.
 
 The idea was to have a private, locally/remote hosted server to manage all of your own Sonoff devices.
 Does not require flashing and without firmware upgrade.
@@ -6,7 +8,6 @@ It is done by connecting to the device (via wifi, when it is in AP mode)
 and telling him that from now on, his server is in a new IP address (the private sonoff server, instead of the sonoff cloud servers).
   
   
-Current State => Tested and Working with Sonoff Duel.
 
 A lot of this code is based on the findings and code from these sources:
 * http://blog.nanl.de/2017/05/sonota-flashing-itead-sonoff-devices-via-original-ota-mechanism/
