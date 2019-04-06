@@ -16,7 +16,7 @@
     "http": "^0.0.0",
     "https": "^1.0.0",
     "nodejs-websocket": "^1.7.1",
-    "request": "^2.83.0",
+    "request": "^2.88.0",
     "url": "^0.11.0",
     "wifi-control": "^2.0.1"
   },
@@ -29,9 +29,9 @@
     "sonoff Dual"
   ],
   "author": {
-    "name" : "Jhonny Cohen",
-    "email" : "jhonny@sidecode.io",
-    "url" : "https://sidecode.io"
+    "name": "Jhonny Cohen",
+    "email": "jhonny@sidecode.io",
+    "url": "https://sidecode.io"
   },
   "license": "ISC"
 }

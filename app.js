@@ -133,7 +133,7 @@ app.get('/devices/:deviceId/:state', function (req, res) {
                 sonoffServer.turnOffDevice(req.params.deviceId);
                 break;
             default:
-                res.status(404).json('Sonoff device ' + req.params.deviceId + ' can not be switched to "' + req.params.state + '", only "ON" and "OFF" are supported currently');
+                res.status(404).json({message: 'Sonoff device ' + req.params.deviceId + ' can not be switched to "' + req.params.state + '", only "ON" and "OFF" are supported currently'});
         }
     }
 });

@@ -33,10 +33,21 @@ The "server" is the device, which should stay in contact with the SONOFF devices
 * "HTTPS_PORT" can be any port.
 * "WEBSOCKET_PORT" can be any port.
 
+### Configuration - For Dev purposes.   
+
+To work in dev mode (with nodemon) - run:
+```bash
+npm run dev
+```
+Also, there is a .dotenv support, instead of editing the configuration directly via the config.json,
+It is possible to add a .env file, .env-example supplied. 
+
+
 # Sonoff Dual known led states:
 * 3 Fast blinks - Pairing mode.
 * Steady fast blink - Wifi enabled and accessible Mode (needed for setting up a new device).
-* 2 slow blinks - Wifi connected but could not establish a server connection (can't register device an open a websocket).
+* 2 slow blinks - Wifi connected and looking for server, If takes too long, could mean that it can't establish a server connection (can't register device an open a websocket).
+* 1 slow blink - Attempting to register with the server (handshake and open the websocket). 
 * Steady light - Established a connection with the server, and ready for commands!.
 
 
