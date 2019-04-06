@@ -117,23 +117,30 @@ app.get('/devices/:deviceId/:state', function (req, res) {
     var d = sonoffServer.getDeviceState(req.params.deviceId);
 
     if (!d || d == "disconnected") {
-        res.status(400).json({'message': 'Sonoff device ' + req.params.deviceId + ' was not found'});
 
-        // res.status(404).send('Sonoff device ' + req.params.deviceId + ' not found');
+                res.status(400);
+                res.json({error:true, message : `Sonoff device + ${ req.params.deviceId } was not found`});
+                res.set("Connection", "close");
     } else {
         switch (req.params.state.toUpperCase()) {
             case "1":
             case "ON":
-                res.status(200);
                 sonoffServer.turnOnDevice(req.params.deviceId);
+                res.status(200);
+                res.json({error:false, message : "success"});
+                res.set("Connection", "close");
                 break;
             case "0":
             case "OFF":
-                res.status(200);
                 sonoffServer.turnOffDevice(req.params.deviceId);
+                res.status(200);
+                res.json({error:false, message : "success"});
+                res.set("Connection", "close");
                 break;
             default:
-                res.status(404).json({message: 'Sonoff device ' + req.params.deviceId + ' can not be switched to "' + req.params.state + '", only "ON" and "OFF" are supported currently'});
+                res.status(400);
+                res.json({error:true, message : `Sonoff device ${ req.params.deviceId } can not be switched to ${ req.params.state }, only "ON" and "OFF" are supported currently`});
+                res.set("Connection", "close");
         }
     }
 });
