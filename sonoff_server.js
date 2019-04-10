@@ -99,7 +99,9 @@ module.exports.createServer = function (config) {
         state.connections[connId] = connection;
         log.log(`WS | addConnection |`);
 
-        if (config.IS_ALIVE_CHECK_ENABLED == true) {
+
+        console.log(config.IS_ALIVE_CHECK_ENABLED);
+        if (config.IS_ALIVE_CHECK_ENABLED === "ON") {
             connection.isAliveIntervalId = setInterval(() => {
                 if (connection.conn.readyState == connection.conn.CONNECTING) return;
                 if (!connection.isAlive) {
@@ -110,13 +112,13 @@ module.exports.createServer = function (config) {
                 conn.sendPing();
                 log.log(`WS | sendPing |`);
             }, config.IS_ALIVE_CHECK_INTERVAL);
+
+
+            connection.conn.on("pong", () => {
+                connection.isAlive = true;
+                log.log(`WS | pong |`);
+            });
         }
-
-
-        connection.conn.on("pong", () => {
-            connection.isAlive = true;
-            log.log(`WS | pong |`);
-        });
     }
 
 

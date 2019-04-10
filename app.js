@@ -34,7 +34,8 @@ if (process.env.SERVER_IP !== undefined)
     config.SERVER_IP = process.env.SERVER_IP;
 if (process.env.IS_ALIVE_CHECK_ENABLED !== undefined)
     config.IS_ALIVE_CHECK_ENABLED = process.env.IS_ALIVE_CHECK_ENABLED;
-if (process.env.CONNECTION_IS_ALIVE_CHECK_INTERVAL !== undefined)
+
+if (process.env.IS_ALIVE_CHECK_INTERVAL !== undefined)
     config.IS_ALIVE_CHECK_INTERVAL = parseInt(process.env.IS_ALIVE_CHECK_INTERVAL);
 
 
