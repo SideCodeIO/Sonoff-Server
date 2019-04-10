@@ -1,8 +1,11 @@
 module.exports.createServer = function (config) {
 
+
     const ws = require("nodejs-websocket");
     const log = require('./helpers/logger');
-    
+
+
+
     //set initialized parameters
     var state = {
         knownDevices: [],
@@ -14,14 +17,20 @@ module.exports.createServer = function (config) {
         }
     };
 
-    // device in der liste finden
+
+
+    // Find the device in known devices.
     state.getDeviceById = (deviceId) => {
         return state.knownDevices.find(d => d.id == deviceId);
     };
 
+
+
     state.getDeviceByParentId = (deviceId) => {
         return state.knownDevices.find(d => d.parentId == deviceId);
     };
+
+
 
     state.updateKnownDevice = (device) => {
         var updated = false;
@@ -39,12 +48,16 @@ module.exports.createServer = function (config) {
         }
     };
 
+
+
     function callDeviceListeners(listeners, device) {
         const deviceListeners = listeners[device.id];
         if (!deviceListeners)
             return;
         deviceListeners.forEach(listener => listener(device.state));
     }
+
+
 
     function addDeviceListener(listeners, deviceId, listener) {
         if (!listeners[deviceId]) {
@@ -54,7 +67,10 @@ module.exports.createServer = function (config) {
         }
     }
 
+
+
     state.pushMessage = a => {
+
         var request = {
             "apikey": "111111111-1111-1111-1111-111111111111",
             "action": a.action,
@@ -73,24 +89,33 @@ module.exports.createServer = function (config) {
         device.connection.conn.sendText(r);
     };
 
+
+
+
     function addConnection(connection) {
         var conn = connection.conn;
         var connId = conn.socket.remoteAddress + ':'  + conn.socket.remotePort;
         connection.isAlive = true;
         state.connections[connId] = connection;
+        log.log(`WS | addConnection |`);
 
-        connection.isAliveIntervalId = setInterval(() => {
-            if (connection.conn.readyState == connection.conn.CONNECTING) return;
-            if (!connection.isAlive) {
-                clearInterval(connection.isAliveIntervalId);
-                return connection.conn.close(408, "connection timed out");
-            }
-            connection.isAlive = false;
-            conn.sendPing();
-        }, config.CONNECTION_IS_ALIVE_CHECK_INTERVAL);
+        if (config.IS_ALIVE_CHECK_ENABLED == true) {
+            connection.isAliveIntervalId = setInterval(() => {
+                if (connection.conn.readyState == connection.conn.CONNECTING) return;
+                if (!connection.isAlive) {
+                    clearInterval(connection.isAliveIntervalId);
+                    return connection.conn.close(408, "connection timed out");
+                }
+                connection.isAlive = false;
+                conn.sendPing();
+                log.log(`WS | sendPing |`);
+            }, config.IS_ALIVE_CHECK_INTERVAL);
+        }
+
 
         connection.conn.on("pong", () => {
             connection.isAlive = true;
+            log.log(`WS | pong |`);
         });
     }
 
@@ -145,7 +170,7 @@ module.exports.createServer = function (config) {
                         });
                         break;
                     case 'update':
-                        //device wants to update its state
+                        // device wants to update its state
                         if (typeof data.params.switches == 'undefined') {
                             // Single switch
                             var device = state.getDeviceById(data.deviceid);
@@ -256,7 +281,7 @@ module.exports.createServer = function (config) {
                                 })
                                 device.state = message.params.switch;
                                 state.updateKnownDevice(device);
-                                log.log('INFO | WS | APP | action has been accnowlaged by the device ' + JSON.stringify(data));
+                                log.log('INFO | WS | APP | action has been acknowledged by the device ' + JSON.stringify(data));
                             } else {
                                 log.error('ERR | WS | No message send, but received an anser', JSON.stringify(data));
                             }
@@ -272,6 +297,7 @@ module.exports.createServer = function (config) {
             log.log('RES | WS | DEV | ' + r);
             conn.sendText(r);
         });
+
        conn.on("close", function (code, reason) {
             var connId = conn.socket.remoteAddress + ':'  + conn.socket.remotePort;
             state.connections[connId].devices.forEach((device, index) => {
@@ -288,6 +314,10 @@ module.exports.createServer = function (config) {
         });
     }).listen(config.WEBSOCKET_PORT);
 
+
+
+
+
     return {
         //currently all known devices are returned with a hint if they are currently connected
         getConnectedDevices: () => {
@@ -296,12 +326,16 @@ module.exports.createServer = function (config) {
             });
         },
 
+
+
         getDeviceState: (deviceId) => {
             var d = state.getDeviceById(deviceId);
 
             if (!d || (typeof d.connection == 'undefined')) return "disconnected";
             return d.state;
         },
+
+
 
         turnOnDevice: (deviceId) => {
             var d = state.getDeviceById(deviceId);
@@ -315,6 +349,8 @@ module.exports.createServer = function (config) {
 
             return "on";
         },
+
+
 
         turnOffDevice: (deviceId) => {
             var d = state.getDeviceById(deviceId);
