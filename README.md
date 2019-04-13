@@ -1,6 +1,8 @@
 # Private Sonoff Server - Sonoff Cloud based on node.js
 
 Current State => Tested and Working with Sonoff Duel.
+Compatible with Home Assistant (Hass.io) Sonoff Server integration (as a hass.io custom component)
+Home Assistant component: https://github.com/SideCodeIO/Home-Assistant-Sonoff-Server-Integration
 
 The idea was to have a private, locally/remote hosted server to manage all of your own Sonoff devices.
 Does not require flashing and without firmware upgrade.
