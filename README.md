@@ -25,6 +25,10 @@ A lot of this code is based on the findings and code from these sources:
 openssl req -x509 -newkey rsa:2048 -keyout certs/keytmp.pem -out certs/cert.pem -days 365
 openssl rsa -in certs/keytmp.pem -out certs/key.pem
 ```
+2. Install all npm packages by runnning:
+```bash
+npm install
+```
 
 # Configuration
 
